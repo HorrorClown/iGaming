@@ -6,27 +6,31 @@
 --
 CCore = {}
 
-function Core:constructor()
+function CCore:constructor()
 
 end
 
-function Core:destructor()
+function CCore:destructor()
 
 end
 
 function CCore:initScript()
     --DB = new() --Add DB Class
     --WBB = new(Cwbbc, "localhost", "iGaming", "dbPass", "iGamingBoard", 3306)
-    self.file = fileOpen("server/system/files.xml")
+    self.file = xmlLoadFile("server/system/files.xml")
     if not self.file then debugOutput("Starting gamemode scripts failed!") return end
-    
+
     self.files = {server = {}, client = {}}
     for _, v in ipairs(xmlNodeGetChildren(self.file)) do
-        if xmlNodeGetAttribute(v, "enabled") == 1 then
-            table.insert(self.files[xmlNodeGetAttribute(v, "type")], xmlNodeGetAttribute(v, "src"))
+        if xmlNodeGetAttribute(v, "enabled") == "1" then
+            if fileExists(xmlNodeGetAttribute(v, "src")) then
+                table.insert(self.files[xmlNodeGetAttribute(v, "type")], xmlNodeGetAttribute(v, "src"))
+            else
+                debugOutput("Can't find file '" .. xmlNodeGetAttribute(v, "src") .. "'", 1)
+            end
         end
     end
-    fileClose(self.file)
+    xmlUnloadFile(self.file)
 end
 
 function CCore:startScripts()
@@ -35,20 +39,19 @@ function CCore:startScripts()
             local f = fileOpen(file)
             local sf = loadstring(fileRead(f, fileGetSize(f)))
             local b, e = pcall(sf)
-            debugOutput(b .. "| " .. e)
             fileClose(f)
         end
     end
 end
 
-addEventHandler("onReosurceStart", resourceRoot,
+addEventHandler("onResourceStart", resourceRoot,
     function()
         local sT = getTickCount()
-        debugOutput("Starting iGaming")
+        debugOutput("[CCore] Starting iGaming")
         Core = new(CCore)
         Core:initScript()
         Core:startScripts()
         --Core:initDefaultSettings()
-        debugOutput(("Starting finished in %s"):format(math.floor(getTickCount()-sT)))
+        debugOutput(("[CCore] Starting finished in %s"):format(math.floor(getTickCount()-sT)))
     end
 )

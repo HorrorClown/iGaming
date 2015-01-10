@@ -4,12 +4,21 @@
 -- Date: 24.12.2014 - Time: 04:34
 -- iGaming-mta.de // iRace-mta.de // iSurvival.de // mtasa.de
 --
-SERVER = triggerServerEvent == nil
-CLIENT = not SERVER
-DEBUG = DEBUG or false
+if CLIENT then x, y = guiGetScreenSize() me = getLocalPlayer() end
+iDEBUG = true
 
-function debugOutput(sText)
-    if DEBUG then
-        outputDebugString(("[%s] %s"):format(SERVER and "Server" or "Client", sText), 0, 0, 255, 0)
+utils = {}
+
+function utils.isHover(startX, startY, width, height)
+    if isCursorShowing() then
+        local pos = {getCursorPosition()}
+        return (x*pos[1] >= startX) and (x*pos[1] <= startX + width) and (y*pos[2] >= startY) and (y*pos[2] <= startY + height)
+    end
+    return false
+end
+
+function debugOutput(sText, nType, cr, cg, cb)
+    if iDEBUG then
+        outputDebugString(("[%s] %s"):format(SERVER and "Server" or "Client", sText), nType or 3, cr, cg, cb)
     end
 end
