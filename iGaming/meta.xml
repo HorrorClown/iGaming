@@ -1,5 +1,6 @@
 <meta>
 	<info author = "PewX" version = "0.1" gamemode = "iGaming" name = "iGaming" />
+	<oop>true</oop>
 
 	<!--Shared-->
 	<script src = "shared/classlib.lua" type = "shared" cache = "false" />
@@ -10,21 +11,24 @@
 			<script src = "server/system/CCore.lua" type = "server" />
 			<script src = "server/system/CDatabase.lua" type = "server" />
 		<!--Classes-->
-			<!--<script src = "server/classes/CPlayer.lua" type = "server" />-->
+			<script src = "server/classes/CPlayer.lua" type = "server" />
 		<!--Managers-->
-			<!--<script src = "server/managers/CPlayerManager.lua" type = "server" />-->
+			<script src = "server/managers/CPlayerManager.lua" type = "server" />
 
 	<!--Client-->
 		<!--System & Core-->
 			<script src = "client/system/CCore.lua" type = "client" cache = "false" />
+
+
 		<!--Classes-->
-			<script src = "client/classes/dxGui/CDX__Manager.lua" type = "client" cache = "false" />
-			<script src = "client/classes/dxGui/CDXButton.lua" type = "client" cache = "false" />
-			<script src = "client/classes/dxGui/CDXCheckbox.lua" type = "client" cache = "false" />
-			<script src = "client/classes/dxGui/CDXContainer.lua" type = "client" cache = "false" />
-			<script src = "client/classes/dxGui/CDXImage.lua" type = "client" cache = "false" />
-			<script src = "client/classes/dxGui/CDXProgressbar.lua" type = "client" cache = "false" />
-			<script src = "client/classes/dxGui/CDXWindow.lua" type = "client" cache = "false" />
+			<!--dxGui-->
+				<script src = "client/classes/dxGui/CDX__Manager.lua" type = "client" cache = "false" />
+				<script src = "client/classes/dxGui/CDXButton.lua" type = "client" cache = "false" />
+				<script src = "client/classes/dxGui/CDXCheckbox.lua" type = "client" cache = "false" />
+				<script src = "client/classes/dxGui/CDXContainer.lua" type = "client" cache = "false" />
+				<script src = "client/classes/dxGui/CDXImage.lua" type = "client" cache = "false" />
+				<script src = "client/classes/dxGui/CDXProgressbar.lua" type = "client" cache = "false" />
+				<script src = "client/classes/dxGui/CDXWindow.lua" type = "client" cache = "false" />
 		<!--Managers-->
 
 	<!--Files-->

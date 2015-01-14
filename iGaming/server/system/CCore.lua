@@ -7,7 +7,9 @@
 CCore = {}
 
 function CCore:constructor()
-
+    self.managers = {}
+    --Manager Table: {"ManagerName", {arguments}}
+    table.insert(self.managers, {"CPlayerManager", {}})
 end
 
 function CCore:destructor()
@@ -44,6 +46,17 @@ function CCore:startScripts()
     end
 end
 
+function CCore:loadManagers()
+    for _, v in ipairs(self.managers) do
+        if (type(_G[v[1]]) == "table") then
+            self[tostring(v[1])] = new(_G[v[1]], unpack(v[2]))
+            debugOutput(("[CCore] Loading manager '%s'"):format(tostring(v[1])))
+        else
+            debugOutput(("[CCore] Couldn't find manager '%s'"):format(tostring(v[1])))
+        end
+    end
+end
+
 addEventHandler("onResourceStart", resourceRoot,
     function()
         local sT = getTickCount()
@@ -51,6 +64,7 @@ addEventHandler("onResourceStart", resourceRoot,
         Core = new(CCore)
         Core:initScript()
         Core:startScripts()
+        Core:loadManagers()
         --Core:initDefaultSettings()
         debugOutput(("[CCore] Starting finished in %s"):format(math.floor(getTickCount()-sT)))
     end
