@@ -8,8 +8,8 @@ CCore = {}
 
 function CCore:constructor()
     self.managers = {}
-    --Manager Table: {"ManagerName", {arguments}}
-    --table.insert(self.managers, {"", {}})
+    ---Manager Table: {"ManagerName", {arguments}}
+    table.insert(self.managers, {"CSoundManager", {}})
 end
 
 function CCore:destructor()

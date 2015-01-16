@@ -19,7 +19,6 @@
 		<!--System & Core-->
 			<script src = "client/system/CCore.lua" type = "client" cache = "false" />
 
-
 		<!--Classes-->
 			<!--dxGui-->
 				<script src = "client/classes/dxGui/CDX__Manager.lua" type = "client" cache = "false" />
@@ -29,7 +28,9 @@
 				<script src = "client/classes/dxGui/CDXImage.lua" type = "client" cache = "false" />
 				<script src = "client/classes/dxGui/CDXProgressbar.lua" type = "client" cache = "false" />
 				<script src = "client/classes/dxGui/CDXWindow.lua" type = "client" cache = "false" />
+			<!--sound-->
+				<script src = "client/classes/sound/CSound.lua" type = "client" cache = "false" />
 		<!--Managers-->
-
+			<script src = "client/managers/CSoundManager.lua" type = "client" cache = "false" />
 	<!--Files-->
 </meta>

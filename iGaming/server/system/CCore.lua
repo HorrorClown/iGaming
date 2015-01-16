@@ -66,6 +66,6 @@ addEventHandler("onResourceStart", resourceRoot,
         Core:startScripts()
         Core:loadManagers()
         --Core:initDefaultSettings()
-        debugOutput(("[CCore] Starting finished in %s"):format(math.floor(getTickCount()-sT)))
+        debugOutput(("[CCore] Starting finished (%sms)"):format(math.floor(getTickCount()-sT)))
     end
 )
