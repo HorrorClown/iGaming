@@ -200,7 +200,7 @@ end
 --//Useful
 
 function Cwbbc:message(sMessage)
-    outputDebugString(("[%s:%s@%s]: %s"):format(self.sUser, self.sHost, self.sDBName, sMessage), 0, 255, 0, 255)
+    debugOutput(("[%s] %s"):format(self.sDBName, sMessage))
 end
 
 function getDoubleSaltedHash(sDBHash, sPW)
@@ -239,3 +239,11 @@ function Cwbbc:get(t, c, w, wV, wO, wVO)    --t = table | c = column | w = where
         return row[c]
     end
 end
+
+addEventHandler("onResourceStart", resourceRoot,
+    function()
+        if type(bcrypt_digest) ~= "function" then
+           outputDebugString("[iConnect] bcrypt module required to compare passwords!", 2)
+        end
+    end
+)

@@ -7,7 +7,7 @@
 CDXCheckbox = inherit(CDXManager)
 
 function CDXCheckbox:constructor(sText, nDiffX, nDiffY, nWidth, nHeight, bChecked, parent)
-    self.text = sText
+    self.title = sText
     self.diffX = nDiffX
     self.diffY = nDiffY
     self.w = nWidth
@@ -39,5 +39,5 @@ function CDXCheckbox:render()
     if self.checked then
         dxDrawRectangle(self.x + 2, self.y + 2, self.h - 4, self.h - 4, tocolor(85, 85, 85))
     end
-    dxDrawText(self.text, self.x + self.h + 2, self.y, self.x + self.w, self.y + self.h, tocolor(255, 255, 255), 1, "arial", "left", "center")
+    dxDrawText(self.title, self.x + self.h + 2, self.y, self.x + self.w, self.y + self.h, tocolor(255, 255, 255), 1, "arial", "left", "center")
 end

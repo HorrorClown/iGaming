@@ -18,7 +18,7 @@ end
 
 function CCore:initScript()
     --DB = new() --Add DB Class
-    --WBB = new(Cwbbc, "localhost", "iGaming", "dbPass", "iGamingBoard", 3306)
+    WBB = new(Cwbbc, "localhost", "igaming", "f3CMBGVPnuUP4EjN", "igaming_board", 3306)
     self.file = xmlLoadFile("server/system/files.xml")
     if not self.file then debugOutput("Starting gamemode scripts failed!") return end
 

@@ -11,6 +11,7 @@
 			<script src = "server/system/CCore.lua" type = "server" />
 			<script src = "server/system/CDatabase.lua" type = "server" />
 		<!--Classes-->
+			<script src = "server/classes/iConnect/iConnect.lua" type = "server" />
 			<script src = "server/classes/CPlayer.lua" type = "server" />
 		<!--Managers-->
 			<script src = "server/managers/CPlayerManager.lua" type = "server" />
@@ -21,10 +22,12 @@
 
 		<!--Classes-->
 			<!--dxGui-->
+				<script src = "client/classes/dxGui/CDXAnimation.lua" type = "client" cache = "false" />
 				<script src = "client/classes/dxGui/CDX__Manager.lua" type = "client" cache = "false" />
 				<script src = "client/classes/dxGui/CDXButton.lua" type = "client" cache = "false" />
 				<script src = "client/classes/dxGui/CDXCheckbox.lua" type = "client" cache = "false" />
 				<script src = "client/classes/dxGui/CDXContainer.lua" type = "client" cache = "false" />
+				<script src = "client/classes/dxGui/CDXEdit.lua" type = "client" cache = "false" />
 				<script src = "client/classes/dxGui/CDXImage.lua" type = "client" cache = "false" />
 				<script src = "client/classes/dxGui/CDXProgressbar.lua" type = "client" cache = "false" />
 				<script src = "client/classes/dxGui/CDXWindow.lua" type = "client" cache = "false" />
@@ -33,4 +36,5 @@
 		<!--Managers-->
 			<script src = "client/managers/CSoundManager.lua" type = "client" cache = "false" />
 	<!--Files-->
+	<file src = "res/images/iGaming.png" />
 </meta>

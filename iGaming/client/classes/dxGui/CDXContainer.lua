@@ -4,7 +4,7 @@
 -- Date: 27.12.2014 - Time: 06:04
 -- iGaming-mta.de // iRace-mta.de // iSurvival.de // mtasa.de
 --
-CDXContainer = {}
+CDXContainer = inherit(CDXManager)
 
 function CDXContainer:constructor(nDiffX, nDiffY, nWidth, nHeight, parent)
     self.diffX = nDiffX

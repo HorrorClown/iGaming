@@ -18,12 +18,3 @@ end
 function CSoundManager:destructor()
 
 end
-
---[[addCommandHandler("horror",
-    function()
-        fadeCamera(true)
-        local winsound = new(CSound, "http://pewx.de/res/sounds/irace_background/Desmeon - On That Day (feat. ElDiablo Flint & Zadik).mp3", false, 0)
-        winsound:play()
-        winsound:fadeIn(8000, "InQuad")
-    end
-)]]

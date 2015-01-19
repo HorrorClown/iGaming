@@ -6,7 +6,7 @@
 --
 CDXImage = inherit(CDXManager)
 
-function CDXImage:constructor(sPath,  nDiffX, nDiffY, nWidth, nHeight, color, parent)
+function CDXImage:constructor(sPath, nDiffX, nDiffY, nWidth, nHeight, color, parent)
     self.path = sPath
     self.diffX = nDiffX
     self.diffY = nDiffY
@@ -17,11 +17,12 @@ function CDXImage:constructor(sPath,  nDiffX, nDiffY, nWidth, nHeight, color, pa
     self.rot = 0
     self.clickExecute = {}
 
-    local pX, pY = self.parent:getPosition()
-    self.x = pX + self.diffX
-    self.y = pY + self.diffY
-
-    table.insert(self.parent.subElements, self)
+    if self.parent then
+        local pX, pY = self.parent:getPosition()
+        self.x = pX + self.diffX
+        self.y = pY + self.diffY
+        table.insert(self.parent.subElements, self)
+    end
 end
 
 function CDXImage:destructor()
@@ -33,11 +34,11 @@ function CDXImage:setRotation(nRot)
 end
 
 function CDXImage:render()
-    if self.parent.moving then
+    if self.parent and self.parent.moving then
         local pX, pY = self.parent:getPosition()
         self.x = pX + self.diffX
         self.y = pY + self.diffY
-    end
+    else self.x = self.diffX self.y = self.diffY end
 
     --Todo: Add hover effekt if functions to click available
     --if utils.isHover(self.x, self.y, self.w, self.h) then self.drawColor = tocolor(220, 50, 0, 220) else self.drawColor = self.color end

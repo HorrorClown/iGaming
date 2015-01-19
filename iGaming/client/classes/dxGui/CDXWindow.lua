@@ -38,11 +38,11 @@ function CDXWindow:onRender()
     --dxDrawRectangle(self.x, self.y, self.w, 22, tocolor(255, 80, 0, 200))
     --dxDrawText(self.title, self.x, self.y, self.x + self.w, self.y + 22, tocolor(255, 255, 255), 1, "arial", "center", "center")
 
-    dxDrawRectangle(self.x-10, self.y-10, self.w+20, self.h+20, tocolor(0, 0, 0, 150))
-    dxDrawRectangle(self.x, self.y, self.w, self.h, tocolor(150, 150, 150, 200))
+    dxDrawRectangle(self.x-10, self.y-10, self.w+20, self.h+20, tocolor(0, 0, 0, 50))
+    dxDrawRectangle(self.x, self.y, self.w, self.h, tocolor(50, 50, 50, 200))
     dxDrawRectangle(self.x, self.y, self.w, 22, tocolor(255, 80, 0, 200))
-    dxDrawLine(self.x, self.y, self.x+self.w, self.y, tocolor(50, 50, 50), 1)
-    dxDrawLine(self.x, self.y+20, self.x+self.w, self.y+20, tocolor(50, 50, 50), 1)
+    dxDrawLine(self.x, self.y+22, self.x+self.w, self.y+22, tocolor(60, 60, 60), 1)
+    dxDrawLine(self.x, self.y+23, self.x+self.w, self.y+23, tocolor(120, 120, 120), 1)
     dxDrawText(self.title, self.x, self.y, self.x + self.w, self.y + 22, tocolor(255, 255, 255), 1, "arial", "center", "center")
     if self.closable then
         --Todo: Use an image as close button not a text that contains 'X' o.O!
@@ -83,12 +83,28 @@ function onLelButtonClick()
     outputChatBox("LOOOOL")
 end
 
+addCommandHandler("i",
+    function()
+        local image = new(CDXImage, "res/images/iGaming.png", x/2, y/2, 256, 256, tocolor(255, 255, 255))
+        image:addAnimation("rotate")
+        image:starAnimation()
+        addEventHandler("onClientRender", root,
+            function()
+                image:render()
+            end
+        )
+    end
+)
+
 addCommandHandler("w",
     function(_, title)
         fadeCamera(true)
-        local window = new(CDXWindow, title or "Default", 500, 500, 300, 200, true, true)
-        local btn = new(CDXButton, "lel button", 20, 20, 100, 21, tocolor(120, 0, 255), window)
-        local cb = new(CDXCheckbox, "First checkbox looool", 20, 45, 200, 14, false, window)
+        local window = new(CDXWindow, title or "iGaming ", 500, 500, 300, 200, true, true)
+
+        local edit = new(CDXEdit, "Username", 20, 20, 200, 21, false, false, window)
+        local edit2 = new(CDXEdit, "Password", 20, 50, 200, 21, false, true, window)
+        local cb = new(CDXCheckbox, "Enable auto-login", 20, 90, 200, 14, false, window)
+        local btn = new(CDXButton, "Login", 190, 150, 100, 20, tocolor(120, 0, 255), window)
         btn:addClickFunction(onLelButtonClick)
 
         window:show()
