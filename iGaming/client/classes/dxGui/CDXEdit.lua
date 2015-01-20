@@ -50,6 +50,7 @@ end
 
 function CDXEdit:onEditClick()
     if not utils.isHover(self.x, self.y, self.w, self.h) then
+        guiSetInputEnabled(false)
         self.clicked = false
         removeEventHandler("onClientClick", root, self.clickFunc)
         removeEventHandler("onClientCharacter", root, self.editFunc)
@@ -57,6 +58,7 @@ function CDXEdit:onEditClick()
     else
         self.markedAll = false
         self.lctrl = false
+        guiSetInputEnabled(true)
     end
 end
 
