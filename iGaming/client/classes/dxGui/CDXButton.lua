@@ -14,25 +14,38 @@ function CDXButton:constructor(sTitle, nDiffX, nDiffY, nWidth, nHeight, color, p
     self.w = nWidth
     self.h = nHeight
     self.color = color
+    self.alpha = 255
     self.parent = parent or false
     self.clickExecute = {}
 
-    local pX, pY = self.parent:getPosition()
-    self.x = pX + self.diffX
-    self.y = pY + self.diffY
-
-    table.insert(self.parent.subElements, self)
+    if self.parent then
+        local pX, pY = self.parent:getPosition()
+        self.x = pX + self.diffX
+        self.y = pY + self.diffY
+        table.insert(self.parent.subElements, self)
+    end
 end
 
 function CDXButton:destructor()
 
 end
 
+function CDXButton:getProperty(sKey)
+    return self[sKey]
+end
+
+function CDXButton:setProperty(sKey, nValue)
+   self[sKey] = nValue
+end
+
 function CDXButton:render()
-    if self.parent.moving then
+    if self.parent and self.parent.moving then
         local pX, pY = self.parent:getPosition()
         self.x = pX + self.diffX
         self.y = pY + self.diffY
+    else
+        self.x = self.diffX
+        self.y = self.diffY
     end
 
     if utils.isHover(self.x, self.y, self.w, self.h) then self.drawColor = tocolor(220, 50, 0, 220) else self.drawColor = self.color end
