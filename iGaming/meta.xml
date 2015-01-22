@@ -21,6 +21,9 @@
 			<script src = "client/system/CCore.lua" type = "client" cache = "false" />
 
 		<!--Classes-->
+			<!--CLogin-->
+				<script src = "client/classes/CLogin/CLogin.lua" type = "client" cache = "false" />
+
 			<!--dxGui-->
 				<script src = "client/classes/dxGui/CDXAnimation.lua" type = "client" cache = "false" />
 				<script src = "client/classes/dxGui/CDX__Manager.lua" type = "client" cache = "false" />

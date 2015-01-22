@@ -17,6 +17,7 @@ function CCore:destructor()
 end
 
 function CCore:startScript()
+    Login = new(CLogin)
     for _, v in ipairs(self.managers) do
         if (type(_G[v[1]]) == "table") then
             self[tostring(v[1])] = new(_G[v[1]], unpack(v[2]))

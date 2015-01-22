@@ -20,7 +20,7 @@ function CDXAnimation:destructor()
 
 end
 
-function CDXAnimation:starAnimation()
+function CDXAnimation:startAnimation()
     self.startTick = getTickCount()
     self.endTick = self.startTick + self.duration
     self.startRot = self.element.rot
@@ -45,9 +45,9 @@ function CDXAnimation:wipe()
     local p = (getTickCount()-self.startTick)/(self.endTick-self.startTick)
     local rot = interpolateBetween(self.startRot, 0, 0, self.arg1, 0, 0, p, self.easing)
     if rot then self.element.rot = rot end
-    if p => 1 then 
+    if p >= 1 then
         self.startRot = self.arg1 
-        self.arg1 = self.arg*-1
+        self.arg1 = self.arg1*-1
         self.startTick = getTickCount()
         self.endTick = self.startTick + self.duration
     end
@@ -58,7 +58,7 @@ function CDXAnimation:changePos()
     local nx, ny = interpolateBetween(self.startX, self.startY, 0, self.arg1, self.arg2, 0, p, self.easing)
     self.element.x = nx
     self.element.y = ny
-    if p => 1 then 
+    if p >= 1 then
         removeEventHandler("onClientRender", root, self.animRenderFunc)
     end
 end
@@ -68,7 +68,7 @@ function CDXAnimation:changeSize()
     local nw, nh = interpolateBetween(self.startW, self.startH, 0, self.arg1, self.arg2, 0, p, self.easing)
     self.element.w = nw
     self.element.h = nh
-    if p => 1 then 
+    if p >= 1 then
         removeEventHandler("onClientRender", root, self.animRenderFunc)
     end
 end
@@ -77,7 +77,7 @@ function CDXAnimation:changeAlpha()
     local p = (getTickCount()-self.startTick)/(self.endTick-self.startTick)
     local na = interpolateBetween(self.startA, 0, 0, self.arg1, 0, 0, p, self.easing)
     self.element.alpha = na
-    if p => 1 then 
+    if p >= 1 then
         removeEventHandler("onClientRender", root, self.animRenderFunc)
     end
 end

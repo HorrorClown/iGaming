@@ -59,7 +59,7 @@ end
 
 function CDXWindow:onCloseButtonClick(btn, st)
     if btn == "left" and st == "down" then
-        if utils.isHover(self.x + self.w - 22, self.y, 22, 22) then
+        if self.closable and utils.isHover(self.x + self.w - 22, self.y, 22, 22) then
             self:hide()
             return
         end
@@ -80,11 +80,8 @@ end
 function CDXWindow:addSubElement(eSubElement)
     table.insert(self.subElements, eSubElement)
 end
---Dev
-function onLelButtonClick()
-    outputChatBox("LOOOOL")
-end
 
+--Dev
 --[[addCommandHandler("i",
     function()
         local image = new(CDXImage, "res/images/iGaming.png", x/2, y/2, 256, 256, tocolor(255, 255, 255))

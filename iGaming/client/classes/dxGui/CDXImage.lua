@@ -18,11 +18,16 @@ function CDXImage:constructor(sPath, nDiffX, nDiffY, nWidth, nHeight, color, par
     self.alpha = 255
     self.clickExecute = {}
 
+    self.onRenderFunc = bind(self.render, self)
+
     if self.parent then
         local pX, pY = self.parent:getPosition()
         self.x = pX + self.diffX
         self.y = pY + self.diffY
         table.insert(self.parent.subElements, self)
+    else
+        self.x = self.diffX
+        self.y = self.diffY
     end
 end
 
@@ -35,7 +40,7 @@ function CDXImage:render()
         local pX, pY = self.parent:getPosition()
         self.x = pX + self.diffX
         self.y = pY + self.diffY
-    else self.x = self.diffX self.y = self.diffY end
+    end
 
     --Todo: Add hover effekt if functions to click available
     --if utils.isHover(self.x, self.y, self.w, self.h) then self.drawColor = tocolor(220, 50, 0, 220) else self.drawColor = self.color end

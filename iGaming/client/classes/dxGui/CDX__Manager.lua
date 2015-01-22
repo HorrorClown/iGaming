@@ -4,7 +4,7 @@
 -- Date: 19.12.2014 - Time: 18:19
 -- pewx.de // iGaming-mta.de // iRace-mta.de // iSurvival.de // mtasa.de
 --
-CDXManager = inherit()
+CDXManager = {}
 
 function CDXManager:constructor()
 
@@ -16,9 +16,11 @@ end
 
 function CDXManager:show()
     addEventHandler("onClientRender", root, self.onRenderFunc)
-    addEventHandler("onClientClick", root, self.onCloseButtonClickFunc)
-    for _, subElement in ipairs(self.subElements) do
-        subElement:addClickHandler()
+    if self.onCloseButtonClickFunc then addEventHandler("onClientClick", root, self.onCloseButtonClickFunc) end
+    if self.subElements then
+        for _, subElement in ipairs(self.subElements) do
+            subElement:addClickHandler()
+        end
     end
     self.isVisible = true
 end
