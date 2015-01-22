@@ -47,6 +47,24 @@ function CDXManager:addClickFunction(fCallFunc)
     if not self.onClickFunc then self.onClickFunc = bind(self.onClick, self) end
 end
 
+function CDXManager:removeClickFunction(fCallFunc)
+   if self.clickExecute then
+       for i, callFunc in ipairs(self.clickExecute) do
+           if callFunc == fCallFunc then
+               table.remove(self.clickExecute, i)
+           end
+       end
+    end
+end
+
+function CDXManager:getProperty(sKey)
+    return self[sKey]
+end
+
+function CDXManager:setProperty(sKey, nValue)
+    self[sKey] = nValue
+end
+
 function CDXManager:addClickHandler()
     addEventHandler("onClientClick", root, self.onClickFunc)
 end
