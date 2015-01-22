@@ -15,6 +15,7 @@ function CDXImage:constructor(sPath, nDiffX, nDiffY, nWidth, nHeight, color, par
     self.color = color
     self.parent = parent or false
     self.rot = 0
+    self.alpha = 255
     self.clickExecute = {}
 
     if self.parent then
@@ -29,10 +30,6 @@ function CDXImage:destructor()
 
 end
 
-function CDXImage:setRotation(nRot)
-    self.rot = nRot
-end
-
 function CDXImage:render()
     if self.parent and self.parent.moving then
         local pX, pY = self.parent:getPosition()
@@ -42,5 +39,5 @@ function CDXImage:render()
 
     --Todo: Add hover effekt if functions to click available
     --if utils.isHover(self.x, self.y, self.w, self.h) then self.drawColor = tocolor(220, 50, 0, 220) else self.drawColor = self.color end
-    dxDrawImage(self.x, self.y, self.w, self.h, self.path, self.rot, 0, 0, self.drawColor)
+    dxDrawImage(self.x, self.y, self.w, self.h, self.path, self.rot, 0, 0, tocolor(255, 255, 255, self.alpha))
 end
