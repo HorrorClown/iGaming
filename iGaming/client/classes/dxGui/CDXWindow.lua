@@ -14,6 +14,7 @@ function CDXWindow:constructor(sTitle, nPosX, nPosY, nWidth, nHeight, bClosable,
     self.h = nHeight
     self.closable = bClosable
     self.movable = bMovable
+    self.alpha = 255
 
     self.subElements = {}
     self.isVisible = false
@@ -38,12 +39,12 @@ function CDXWindow:onRender()
     --dxDrawRectangle(self.x, self.y, self.w, 22, tocolor(255, 80, 0, 200))
     --dxDrawText(self.title, self.x, self.y, self.x + self.w, self.y + 22, tocolor(255, 255, 255), 1, "arial", "center", "center")
 
-    dxDrawRectangle(self.x-10, self.y-10, self.w+20, self.h+20, tocolor(0, 0, 0, 50))
-    dxDrawRectangle(self.x, self.y, self.w, self.h, tocolor(50, 50, 50, 200))
-    dxDrawRectangle(self.x, self.y, self.w, 22, tocolor(255, 80, 0, 200))
-    dxDrawLine(self.x, self.y+22, self.x+self.w, self.y+22, tocolor(60, 60, 60), 1)
-    dxDrawLine(self.x, self.y+23, self.x+self.w, self.y+23, tocolor(120, 120, 120), 1)
-    dxDrawText(self.title, self.x, self.y, self.x + self.w, self.y + 22, tocolor(255, 255, 255), 1, "arial", "center", "center")
+    dxDrawRectangle(self.x-10, self.y-10, self.w+20, self.h+20, tocolor(0, 0, 0, self.alpha/255*50))
+    dxDrawRectangle(self.x, self.y, self.w, self.h, tocolor(50, 50, 50, self.alpha/255*200))
+    dxDrawRectangle(self.x, self.y, self.w, 22, tocolor(255, 80, 0, self.alpha/255*200))
+    dxDrawLine(self.x, self.y+22, self.x+self.w, self.y+22, tocolor(60, 60, 60, self.alpha), 1)
+    dxDrawLine(self.x, self.y+23, self.x+self.w, self.y+23, tocolor(120, 120, 120, self.alpha), 1)
+    dxDrawText(self.title, self.x, self.y, self.x + self.w, self.y + 22, tocolor(255, 255, 255, self.alpha), 1, "arial", "center", "center")
     if self.closable then
         --Todo: Use an image as close button not a text that contains 'X' o.O!
         if utils.isHover(self.x + self.w - 22, self.y, 22, 22) then self.hover = true else self.hover = false end
@@ -51,6 +52,7 @@ function CDXWindow:onRender()
     end
 
     for _, subElement in ipairs(self.subElements) do
+        if subElement.alpha then subElement.alpha = self.alpha end
         subElement:render()
     end
 end
@@ -83,7 +85,7 @@ function onLelButtonClick()
     outputChatBox("LOOOOL")
 end
 
-addCommandHandler("i",
+--[[addCommandHandler("i",
     function()
         local image = new(CDXImage, "res/images/iGaming.png", x/2, y/2, 256, 256, tocolor(255, 255, 255))
         image:addAnimation("rotate")
@@ -110,4 +112,4 @@ addCommandHandler("w",
         window:show()
         showCursor(true, true)
     end
-)
+)]]
