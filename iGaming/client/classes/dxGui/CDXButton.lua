@@ -30,14 +30,6 @@ function CDXButton:destructor()
 
 end
 
-function CDXButton:getProperty(sKey)
-    return self[sKey]
-end
-
-function CDXButton:setProperty(sKey, nValue)
-   self[sKey] = nValue
-end
-
 function CDXButton:render()
     if self.parent and self.parent.moving then
         local pX, pY = self.parent:getPosition()
