@@ -4,7 +4,7 @@
 -- Date: 19.12.2014 - Time: 18:19
 -- pewx.de // iGaming-mta.de // iRace-mta.de // iSurvival.de // mtasa.de
 --
-CDXManager = inherit(CDXAnimation)
+CDXManager = inherit()
 
 function CDXManager:constructor()
 
