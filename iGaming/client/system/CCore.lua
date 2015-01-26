@@ -10,6 +10,7 @@ function CCore:constructor()
     self.managers = {}
     ---Manager Table: {"ManagerName", {arguments}}
     table.insert(self.managers, {"CSoundManager", {}})
+    table.insert(self.managers, {"CDXManager", {})
 end
 
 function CCore:destructor()
