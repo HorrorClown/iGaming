@@ -17,6 +17,10 @@ function CCore:destructor()
 
 end
 
+function CCore:getManager(sName)
+    return self[sName]
+end
+
 function CCore:startScript()
     Login = new(CLogin)
     for _, v in ipairs(self.managers) do
