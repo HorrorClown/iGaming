@@ -15,15 +15,18 @@ function CDXWindow:constructor(sTitle, nPosX, nPosY, nWidth, nHeight, bClosable,
     self.closable = bClosable
     self.movable = bMovable
     self.alpha = 255
+    self.isActive = false
 
     self.subElements = {}
     self.isVisible = false
 
     self.onRenderFunc = bind(self.onRender, self)
     self.onCloseButtonClickFunc = bind(self.onCloseButtonClick, self)
+    Core:getManager("CDXManager"):registerWindow(self)
 end
 
 function CDXWindow:destructor()
+    Core:getManager("CDXManager"):unregisterWindow(self)
     for _, subElement in pairs(self.subElements) do
         delete(subElement)
     end
