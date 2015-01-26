@@ -7,7 +7,7 @@
 CDXManager = {}
 
 function CDXManager:constructor()
-
+    self.windows = {}
 end
 
 function CDXManager:destructor()
@@ -36,6 +36,7 @@ end
 
 function CDXManager:onClick(btn, st)
     if btn == "left" and st == "down" then
+        if not self.parent.isActive then return end
         if utils.isHover(self.x, self.y, self.w, self.h) then
             for _, aFunc in ipairs(self.clickExecute) do
                 aFunc(self)
@@ -73,4 +74,16 @@ end
 
 function CDXManager:removeClickHandler()
     removeEventHandler("onClientClick", root, self.onClickFunc)
+end
+
+function CDXManager:registerWindow(eWindow)
+    table.insert(self.windows, eWindow)
+end
+
+function CDXManager:unregisterWindow(eWindow)
+    for i, window in ipairs(self.windows) do
+        if window == eWindow then
+            table.remove(self.windows, i)
+        end
+    end
 end
