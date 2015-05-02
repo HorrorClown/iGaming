@@ -17,6 +17,10 @@ function utils.isHover(startX, startY, width, height)
     return false
 end
 
+function utils.clearText(sText)
+    return sText:gsub("#%x%x%x%x%x%x", ""):gsub("#%x%x%x%x%x%x", "")
+end
+
 function debugOutput(sText, nType, cr, cg, cb)
     if iDEBUG then
         outputDebugString(("[%s] %s"):format(SERVER and "Server" or "Client", sText), nType or 3, cr, cg, cb)

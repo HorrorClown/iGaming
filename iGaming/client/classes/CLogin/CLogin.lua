@@ -7,72 +7,59 @@
 CLogin = {}
 
 function CLogin:constructor()
-  setTime(12, 0)
-  setMinuteDuration(0)
-  setPlayerHudComponentVisible("all", false)
-  fadeCamera(true)
-  setCloudsEnabled(false)
+    fadeCamera(false)
+    --[[self.cams = {
+        {2054.9406738281, 1298.5733642578, 95.947769165039, 2120.7822265625, 1230.1296386719, 64.637092590332},
+        {1814.2286376953, -1888.7556152344, 53.846141815186, 1734.5378417969, -1832.7844238281, 31.117233276367},
+        {1578.1954345703, -1610.4873046875, 78.673355102539, 1501.4410400391, -1658.9365234375, 36.703880310059}
+    }
 
-  self:showLogo()
-  --self:createLoginWindow()
+    setTime(12, 0)
+    setMinuteDuration(600000)
+    setPlayerHudComponentVisible("all", false)
+    fadeCamera(true)
+    setCloudsEnabled(false)
+
+    setCameraMatrix(unpack(self.cams[math.random(1, #self.cams)]))]]
+
+    local sound = new(CSound, "http://pewx.de/res/sounds/iGaming/Nero - The Thrill.mp3", false, 0)
+    sound:play()
+    sound:fadeIn(15000, "Linear")
+
+    addEvent("server:onLogin", true)
+    addEventHandler("server:onLogin", me, bind(self.onLogin, self))
+    self:createLogin()
 end
 
 function CLogin:destructor()
   
 end
 
-function CLogin:showLogo()
-   self.logo = new(CDXImage, "res/images/iGaming.png", 0, 0, 0, 0, tocolor(255, 255, 255))
-  self.logo:show()
-  self.anim_logo = new(CDXAnimation, self.logo, "wipe", 3000, "InOutQuad", 1000)
-   self.anim_pos = new(CDXAnimation, self.logo, "changePos", 5000, "InOutQuad", x/2-128, y/2-128)
-   self.anim_res = new(CDXAnimation, self.logo, "changeSize", 5000, "InOutQuad", 256, 256)
-   self.anim_pos:startAnimation()
-  self.anim_logo:startAnimation()
-  self.anim_res:startAnimation()
+function CLogin:createLogin()
+    --ToDo: Login Screen mit Spotify API für neuste hits? -> http://charts.spotify.com/api/tracks/most_streamed/de/daily/latest
+
+    --ToDo: Just Dev!
+    setDevelopmentMode(true, true)
+    addCommandHandler("igl",
+        function(_, username, pw)
+            local EMAIL = false
+            if username and pw then
+                if string.find(username, "@") then EMAIL = true end
+                triggerServerEvent("client:onLogin", resourceRoot, username, pw, EMAIL)
+            else
+                debugOutput("Invalid username or password!")
+            end
+        end
+        )
 end
 
-function CLogin:createLoginWindow()
-  self.loginWindow = new(CDXWindow, "iGaming - Login", x/2-220/2, y/2-180/2, 220, 180, false, false)
-  self.username = new(CDXEdit, "Username", 20, 20, 155, 21, false, false, self.loginWindow)
-  self.password = new(CDXEdit, "Password", 20, 50, 155, 21, false, true, self.loginWindow)
-  self.autoLogin = new(CDXCheckbox, "Enable auto-login", 20, 90, 200, 14, false, self.loginWindow)
-  self.btn_login = new(CDXButton, "Login", 20, 120, 100, 20, tocolor(120, 0, 255), self.loginWindow)
-  self.btn_login:addClickFunction(bind(self.onClientLogin, self))
-
-  self.loginWindow:show()
-  showCursor(true)
+function CLogin:onLogin(bSuccess)
+    if bSuccess then
+        debugOutput("Successfully logged in!")
+    end
 end
 
+--Methode called by CEF, when LOGIN Button pressed
 function CLogin:onClientLogin()
   outputChatBox("Client login!")
 end
-
---------------------------
----------------------------
-----------------------
-local angle, duration = 0, 0
-addCommandHandler("setAngle", function(_, a)
-  angle = tonumber(a)
-  showCursor(true)
-end)
-
-addCommandHandler("setDuration", function(_, d)
-  duration = tonumber(d)
-  showCursor(true)
-end)
-
-addEventHandler("onClientClick", root,
-  function(btn, st, ax, ay)
-    if btn == "left" and st == "down" then
-      local p,k = ax, ay
-      image = new(CDXImage, "res/images/iGaming.png", p-128, k-128, 256, 256, tocolor(255, 255, 255))
-      image:show()
-      image.animation = new(CDXAnimation, image, "wipe", duration, "InOutQuad", angle)
-      image.animation:startAnimation()
-      setTimer(function(image)
-        delete(image.animation)
-        delete(image)
-      end, 20000, 1, image)
-    end
-  end)

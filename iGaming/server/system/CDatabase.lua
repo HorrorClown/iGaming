@@ -12,9 +12,9 @@ function CDatabase:constructor(sHost, sUser, sPass, sDBName, nPort)
     self.sDBName = sDBName
     self.hCon = dbConnect("mysql", ("dbname=%s;host=%s;port=%s"):format(sDBName, sHost, nPort), sUser, sPass, "autoreconnect=1")
     if self.hCon then
-        outputDebugString("Successfully connected!")
+        debugOutput(("[%s] Successfully connected!"):format(sDBName))
     else
-        outputDebugString("Can't connect to mysql server!")
+        debugOutput(("[%s] Can't connect to mysql server!"):format(sDBName))
         stopResource(getThisResource())
     end
 end

@@ -14,6 +14,7 @@ function CDXCheckbox:constructor(sText, nDiffX, nDiffY, nWidth, nHeight, bChecke
     self.h = nHeight
     self.checked = bChecked or false
     self.parent = parent or false
+    self.alpha = 255
 
     local pX, pY = self.parent:getPosition()
     self.x = pX + self.diffX
@@ -35,9 +36,9 @@ function CDXCheckbox:render()
         self.y = pY + self.diffY
     end
 
-    dxDrawRectangle(self.x, self.y, self.h, self.h, tocolor(255, 255, 255))
+    dxDrawRectangle(self.x, self.y, self.h, self.h, tocolor(255, 255, 255, self.alpha))
     if self.checked then
-        dxDrawRectangle(self.x + 2, self.y + 2, self.h - 4, self.h - 4, tocolor(85, 85, 85))
+        dxDrawRectangle(self.x + 2, self.y + 2, self.h - 4, self.h - 4, tocolor(85, 85, 85, self.alpha))
     end
-    dxDrawText(self.title, self.x + self.h + 2, self.y, self.x + self.w, self.y + self.h, tocolor(255, 255, 255), 1, "arial", "left", "center")
+    dxDrawText(self.title, self.x + self.h + 2, self.y, self.x + self.w, self.y + self.h, tocolor(255, 255, 255, self.alpha), 1, "arial", "left", "center")
 end

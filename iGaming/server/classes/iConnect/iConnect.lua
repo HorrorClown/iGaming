@@ -7,10 +7,11 @@
 --
 Cwbbc = {}
 
-function Cwbbc:constructor(sHost, sUser, sPass, sDBName, sPort)
+function Cwbbc:constructor(sHost, sUser, sPass, sDBName, sPort, bDebug)
     self.sHost = sHost
     self.sUser = sUser
     self.sDBName = sDBName
+    self.debug = bDebug
     self.hCon = dbConnect("mysql", ("dbname=%s;host=%s;port=%s"):format(sDBName, sHost, sPort), sUser, sPass, "autoreconnect=1")
     if self.hCon then
         self:message("Successfully connected!")
@@ -29,24 +30,26 @@ end
 
 --//Woltlab Community Framework
 
-function Cwbbc:comparePassword(sUsername, sPW)
+function Cwbbc:comparePassword(nUID, sPW)
     if not self.hCon then self:message("Not connected to mysql server") return false end
-    assert(type(sUsername) == "string", "Invalid string @ argument 1")
+    assert(type(nUID) == "number", "Invalid number @ argument 1")
     assert(type(sPW) == "string", "Invalid string @ argument 2")
-    if self:get("wcf1_user", "username", "username", sUsername) then
-        local dbHash = self:get("wcf1_user", "password", "username", sUsername)
+    if self:get("wcf1_user", "userID", "userID", nUID) then
+        local dbHash = self:get("wcf1_user", "password", "userID", nUID)
         local pwHash = getDoubleSaltedHash(dbHash, sPW)
-        outputChatBox("dbHash:" .. tostring(dbHash))
-        outputChatBox("pwHash:" .. tostring(pwHash))
+        if self.debug then
+            outputChatBox("dbHash:" .. tostring(dbHash))
+            outputChatBox("pwHash:" .. tostring(pwHash))
+        end
         return (dbHash == pwHash)
     end
     return false
 end
 
-function Cwbbc:getUserID(sUsername)
+function Cwbbc:getUserID(sUsername, bEMAIL)
     if not self.hCon then self:message("Not connected to mysql server!") return false end
     assert(type(sUsername) == "string", "Invalid string @ argument 1")
-    local qResult = self:get("wcf1_user", "userID", "username", sUsername)
+    local qResult = bEMAIL and self:get("wcf1_user", "userID", "email", sUsername) or self:get("wcf1_user", "userID", "username", sUsername)
     if qResult ~= nil then return tonumber(qResult) else return false end
 end
 
@@ -54,6 +57,12 @@ function Cwbbc:getUserName(nUID)
     if not self.hCon then self:message("Not connected to mysql server!") return false end
     assert((type(nUID) == "number"), "Invalid number @ argument 1")
     return self:get("wcf1_user", "username", "userID", nUID) or false
+end
+
+function Cwbbc:getUserMail(nUID)
+    if not self.hCon then self:message("Not connected to mysql server!") return false end
+    assert((type(nUID) == "number"), "Invalid number @ argument 1")
+    return self:get("wcf1_user", "email", "userID", nUID) or false
 end
 
 function Cwbbc:getUserTitle(nUID)

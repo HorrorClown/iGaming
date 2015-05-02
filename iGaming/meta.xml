@@ -12,18 +12,34 @@
 			<script src = "server/system/CDatabase.lua" type = "server" />
 		<!--Classes-->
 			<script src = "server/classes/iConnect/iConnect.lua" type = "server" />
-			<script src = "server/classes/CPlayer.lua" type = "server" />
+			<script src = "server/classes/CPlayer/CPlayer.lua" type = "server" />
+
+            <script src = "server/classes/Gamemodes/CGamemode.lua" type = "server " />
+            <script src = "server/classes/Gamemodes/CLobby.lua" type = "server" />
+            <script src = "server/classes/Gamemodes/COpenWorld.lua" type = "server" />
 		<!--Managers-->
-			<script src = "server/managers/CPlayerManager.lua" type = "server" />
+			<script src = "server/managers/CPlayerManager/CPlayerManager.lua" type = "server" />
+			<script src = "server/managers/CLoginManager/CLoginManager.lua"  type = "server" />
+			<script src = "server/managers/CGamemodeManager/CGamemodeManager.lua"  type = "server" />
 
 	<!--Client-->
 		<!--System & Core-->
 			<script src = "client/system/CCore.lua" type = "client" cache = "false" />
 
 		<!--Classes-->
-			<!--CLogin-->
-				<script src = "client/classes/CLogin/CLogin.lua" type = "client" cache = "false" />
+            <!--webui-->
+                <script src="client/classes/webui/WebWindow.lua" type = "client" cache = "false"/>
+                <script src="client/classes/webui/FrameWebWindow.lua" type = "client" cache = "false"/>
+                <script src="client/classes/webui/WebUIManager.lua" type = "client" cache = "false"/>
+                <script src="client/classes/webui/ExportsAPI.lua" type = "client" cache = "false"/>
 
+            <!--CLogin-->
+				<script src = "client/classes/CLogin/CLogin.lua" type = "client" cache = "false" />
+            <!--Gamemodes-->
+                <script src = "client/classes/Gamemodes/CLobby.lua" type = "client" cache = "false" />
+                <script src = "client/classes/Gamemodes/COpenWorld.lua" type = "client" cache = "false" />
+            <!--CShader-->
+                <script src = "client/classes/CShader/CShader.lua" type = "client" cache = "false" />
 			<!--dxGui-->
 				<script src = "client/classes/dxGui/CDXAnimation.lua" type = "client" cache = "false" />
 				<script src = "client/classes/dxGui/CDX__Manager.lua" type = "client" cache = "false" />
@@ -32,12 +48,17 @@
 				<script src = "client/classes/dxGui/CDXContainer.lua" type = "client" cache = "false" />
 				<script src = "client/classes/dxGui/CDXEdit.lua" type = "client" cache = "false" />
 				<script src = "client/classes/dxGui/CDXImage.lua" type = "client" cache = "false" />
+				<script src = "client/classes/dxGUI/CDXList.lua" type = "client" cache = "false" />
 				<script src = "client/classes/dxGui/CDXProgressbar.lua" type = "client" cache = "false" />
 				<script src = "client/classes/dxGui/CDXWindow.lua" type = "client" cache = "false" />
 			<!--sound-->
 				<script src = "client/classes/sound/CSound.lua" type = "client" cache = "false" />
 		<!--Managers-->
-			<script src = "client/managers/CSoundManager.lua" type = "client" cache = "false" />
-	<!--Files-->
+            <script src = "client/managers/CGamemodeManager.lua" type = "client" cache = "false" />
+            <script src = "client/managers/CSoundManager.lua" type = "client" cache = "false" />
+
+    <!--Files-->
 	<file src = "res/images/iGaming.png" />
+    <file src = "res/shaders/BlurShader.fx" />
+    <file src = "res/shaders/motion.fx" />
 </meta>

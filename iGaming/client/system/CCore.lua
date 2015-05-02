@@ -4,13 +4,15 @@
 -- Date: 19.12.2014 - Time: 18:41
 -- pewx.de // iGaming-mta.de // iRace-mta.de // iSurvival.de // mtasa.de
 --
-CCore = {}
+CCore = {}          --Client Core
 
 function CCore:constructor()
     self.managers = {}
+
     ---Manager Table: {"ManagerName", {arguments}}
+    table.insert(self.managers, {"CGamemodeManager", {}})
     table.insert(self.managers, {"CSoundManager", {}})
-    table.insert(self.managers, {"CDXManager", {})
+    table.insert(self.managers, {"CDXManager", {}})
 end
 
 function CCore:destructor()

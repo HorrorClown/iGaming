@@ -17,6 +17,7 @@ function CDXEdit:constructor(sTitle, nDiffX, nDiffY, nWidth, nHeight, bNumeric, 
     self.clickExecute = {}
     self.numeric = bNumeric
     self.masked = bMasked
+    self.alpha = 255
 
     local pX, pY = self.parent:getPosition()
     self.x = pX + self.diffX
@@ -113,22 +114,22 @@ function CDXEdit:render()
         self.y = pY + self.diffY
     end
 
-    self.lineColor = tocolor(100, 100, 100)
-    self.textColor = tocolor(0, 0, 0)
+    self.lineColor = tocolor(100, 100, 100, self.alpha)
+    self.textColor = tocolor(0, 0, 0, self.alpha)
     if self.clicked then
-        self.lineColor = tocolor(255, 80, 0)
+        self.lineColor = tocolor(255, 80, 0, self.alpha)
         local tw = dxGetTextWidth(self.masked and string.rep("●", #self.text) or self.text, 1, "arial")
         if self.markedAll then
-            self.textColor = tocolor(255, 255, 255)
-            dxDrawRectangle(self.x + 2, self.y + 4, tw, self.h - 8, tocolor(0, 170, 255))
+            self.textColor = tocolor(255, 255, 255, self.alpha)
+            dxDrawRectangle(self.x + 2, self.y + 4, tw, self.h - 8, tocolor(0, 170, 255, self.alpha))
         else
             if getTickCount()%1000 > 500 then
-                dxDrawRectangle(self.x + 2 + tw, self.y + 4, 1, self.h - 8, tocolor(0, 0, 0))
+                dxDrawRectangle(self.x + 2 + tw, self.y + 4, 1, self.h - 8, tocolor(0, 0, 0, self.alpha))
             end
         end
     end
 
     dxDrawLine(self.x, self.y + self.h, self.x + self.w, self.y + self.h, self.lineColor, 2)
-    if self.text == "" then dxDrawText(self.title, self.x + 2, self.y, self.x + self.w, self.y + self.h, tocolor(150, 150, 150), 1, "arial", "left", "center") end
+    if self.text == "" then dxDrawText(self.title, self.x + 2, self.y, self.x + self.w, self.y + self.h, tocolor(150, 150, 150, self.alpha), 1, "arial", "left", "center") end
     dxDrawText(self.masked and string.rep("●", #self.text) or self.text, self.x + 2, self.y, self.x + self.w, self.y + self.h, self.textColor, 1, "arial", "left", "center")
 end
