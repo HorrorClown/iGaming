@@ -3,8 +3,8 @@
 	<oop>true</oop>
 
 	<!--Shared-->
-	<script src = "shared/classlib.lua" type = "shared" cache = "false" />
-	<script src = "shared/utilities.lua" type = "shared" cache = "false" />
+	    <script src = "shared/classlib.lua" type = "shared" cache = "false" />
+	    <script src = "shared/utilities.lua" type = "shared" cache = "false" />
 
 	<!--Server-->
 		<!--System & Core-->
@@ -13,6 +13,7 @@
 		<!--Classes-->
 			<script src = "server/classes/iConnect/iConnect.lua" type = "server" />
 			<script src = "server/classes/CPlayer/CPlayer.lua" type = "server" />
+            <script src = "server/classes/Maps/CMap.lua" type = "server" />
 
             <script src = "server/classes/Gamemodes/CGamemode.lua" type = "server " />
             <script src = "server/classes/Gamemodes/CLobby.lua" type = "server" />
@@ -20,7 +21,8 @@
 		<!--Managers-->
 			<script src = "server/managers/CPlayerManager/CPlayerManager.lua" type = "server" />
 			<script src = "server/managers/CLoginManager/CLoginManager.lua"  type = "server" />
-			<script src = "server/managers/CGamemodeManager/CGamemodeManager.lua"  type = "server" />
+            <script src = "server/managers/CMapManager/CMapManager.lua" type = "server" />
+			<script src = "server/managers/CGamemodeManager/CGamemodeManager.lua" type = "server" />
 
 	<!--Client-->
 		<!--System & Core-->

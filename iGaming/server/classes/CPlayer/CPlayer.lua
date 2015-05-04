@@ -12,7 +12,7 @@ function CPlayer:constructor()
     self.playerName = self:getName()
     self.clearName = utils.clearText(self:getName()) --Todo: Utils Without colorcodes
     self.CurrentGamemode = false
-    bindKey(self, "F1", "down", bind(self.returnToLobby, self))
+    bindKey(self, "F1", "down", bind(CPlayer.returnToLobby, self))
     outputChatBox("Welcome " .. self.clearName)
 end
 

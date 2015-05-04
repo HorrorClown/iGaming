@@ -10,7 +10,7 @@ function CGamemodeManager:constructor()
     self.Gamemode = false
 
     addEvent("server:onJoinGamemode", true)
-    addEventHandler("server:onJoinGamemode", me, bind(self.joinGamemode, self))
+    addEventHandler("server:onJoinGamemode", me, bind(CGamemodeManager.joinGamemode, self))
 end
 
 function CGamemodeManager:destructor()
@@ -25,6 +25,10 @@ function CGamemodeManager:joinGamemode(sGamemode)
 
     if sGamemode == "OpenWorld" then
         return self:setGamemode(new(COpenWorld))
+    end
+
+    if sGamemode == "DD" then
+        return self:setGamemode(new(CRaceDD))
     end
 end
 

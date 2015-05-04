@@ -10,7 +10,7 @@ function CLobby:constructor()
     CGamemode.constructor(self, "Lobby")
 
     addEvent("client:joinGamemode", true)
-    addEventHandler("client:joinGamemode", resourceRoot, bind(self.joinGamemode, self))
+    addEventHandler("client:joinGamemode", resourceRoot, bind(CLobby.joinGamemode, self))
 end
 
 function CLobby:destructor()
@@ -26,5 +26,6 @@ function CLobby:playerLeave(ePlayer)
 end
 
 function CLobby:joinGamemode(sGamemode)
+    if not Gamemodes[sGamemode] then debugOutput(("[CLobby] Gamemode '%s' is not available"):format(sGamemode)) return end
     client:joinGamemode(Gamemodes[sGamemode])
 end

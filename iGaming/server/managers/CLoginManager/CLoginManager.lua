@@ -8,7 +8,7 @@ CLoginManager = {}
 
 function CLoginManager:constructor()
     addEvent("client:onLogin", true)
-    addEventHandler("client:onLogin", resourceRoot, bind(self.onLogin, self))
+    addEventHandler("client:onLogin", resourceRoot, bind(CLoginManager.onLogin, self))
 end
 
 function CLoginManager:destructor()

@@ -27,7 +27,7 @@ function CLogin:constructor()
     sound:fadeIn(15000, "Linear")
 
     addEvent("server:onLogin", true)
-    addEventHandler("server:onLogin", me, bind(self.onLogin, self))
+    addEventHandler("server:onLogin", me, bind(CLogin.onLogin, self))
     self:createLogin()
 end
 

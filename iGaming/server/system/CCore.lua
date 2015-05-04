@@ -12,6 +12,7 @@ function CCore:constructor()
     --Manager Table: {"ManagerName", {arguments}}
     table.insert(self.managers, {"CPlayerManager", {}})
     table.insert(self.managers, {"CLoginManager", {}})
+    table.insert(self.managers, {"CMapManager", {}})
     table.insert(self.managers, {"CGamemodeManager", {}})
 end
 
