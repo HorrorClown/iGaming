@@ -58,12 +58,14 @@ function CMap:extractMapData()
     self.Extracted = true
 
     local meta = XML.load((":%s/meta.xml"):format(self.ResourceName))
-    if not meta then return end
+    if not meta then debugOutput(("[CMap] Error while loading %s/meta.xml"):format(self.ResourceName)) return end
 
+    --//Get map datas
     local mapNode = meta:findChild("map", 0)
     local mapPath = mapNode:getAttributes()
     local mapFile = XML.load((":%s/%s"):format(self.ResourceName, mapPath.src))
-
+    if not mapFile then debugOutput(("[CMap] Error while loading %s/%s.map"):format(self.ResourceName, mapPath.src)) return end
+    
     local mapNodes = mapFile:getAttributes()
     for k, v in ipairs(mapNodes) do
         local type = v:getName()
@@ -79,13 +81,51 @@ function CMap:extractMapData()
          elseif type == "vehicle" then
             table.insert(self.ContentTable["Vehicle"], {attributes["model"], attributes["posX"], attributes["posY"], attributes["posZ"], attributes["rotX"], attributes["rotY"], attributes["rotZ"]})
         elseif type == "racepickup" then
-            table.insert(self.ContentTable["Racepickup"], {})
+            table.insert(self.ContentTable["Racepickup"], {attributes["type"], attributes["vehicle"], attributes["posX"], attributes["posY"], attributes["posZ"], attributes["rotX"], attributes["rotY"], attributes["rotZ"]})
         elseif type == "spawnpoint" then
-            table.insert(self.ContentTable["Spawnpoint"], {})
+            table.insert(self.ContentTable["Spawnpoint"], {attributes["vehicle"], attributes["posX"], attributes["posY"], attributes["posZ"], attributes["rotX"], attributes["rotY"], attributes["rotZ"]}})
         elseif type == "ped" then
-            table.insert(self.ContentTable["Ped"], {})
+            table.insert(self.ContentTable["Ped"], {attributes["model"], attributes["posX"], attributes["posY"], attributes["posZ"], attributes["rotX"], attributes["rotY"], attributes["rotZ"]})
         else
-            debugOutput("[CMap] Warning: Undefined type in map " .. self.Name)
+            debugOutput("[CMap] Warning: Undefined type to extract in map " .. self.Name)
         end
     end
+       
+    --//Load awesome Map scripts
+    local nodes = meta:getChildreen()
+    for k, v in ipairs(nodes) do
+        if v:getName() == "script" then
+            local scriptInfo = v:getAttributes()
+            if scriptInfo.type and scriptInfo.type == "client" then
+                local scriptFile = File((":%s/%s"):format(self.ResourceName, scriptInfo.src), true)
+                if scriptFile then
+                    self.ContentTable["ClientScript"] = ("%s %s"):format(self.ContentTable["ClientScript"], scriptFile:read(scriptFile:getSize()))
+                    scriptFile:close()
+                end
+            else
+                local scriptFile = File((":%s/%s"):format(self.ResourceName, scriptInfo.src), true)
+                if scriptFile then
+                    self.ContentTable["ServerScript"] = ("%s %s"):format(self.ContentTable["ServerScript"], scriptFile:read(scriptFile:getSize()))
+                    scriptFile:close()
+                end
+            end
+        elseif v:getName() == "file" then
+            local fileInfo = v:getAttributes()
+            if fileInfo.src then
+                local fileFile = File((":%s/%s"):format(self.ResourceName, fileInfo.src), true)
+                if fileFile then
+                    table.insert(ContentTable["ClientFiles"], {src = fileInfo.src, content = fileFile:read(fileFile:getSize())})
+                    table.insert(ContentTable["ClientFileHashes"], {src = fileInfo.src, hash = fileFile:getSize()})
+                    fileFile:close()
+                end
+            end
+        end
+    end
+       
+    --//Load Map settings
+    self.ContentTable["Settings"].Weather = tonumber(get(("#%s.weather"):format(self.ResourceName))) or 0
+    self.ContentTable["Settings"].Time = get(("#%s.time"):format(self.ResourceName)) or "12:00"
+    self.ContentTable["Settings"].Gravity = tonumber(get(("#%s.gravity"):format(self.ResourceName))) or 0.008000
+	self.ContentTable["Settings"].Waveheight = tonumber(get(("#%s.waveheight"):format(self.ResourceName)))
+
 end
