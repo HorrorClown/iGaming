@@ -52,3 +52,7 @@ end
 function CMapManager:getRandomMap(sType)
     return self.Maps[sType][math.random(1, #self.Maps[sType])]["Resource"]
 end
+
+function CMapManager:getMapsByType(sType)
+    return self.Maps[sType]
+end
