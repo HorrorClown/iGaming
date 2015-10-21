@@ -1,28 +1,39 @@
 <meta>
-	<info author = "PewX" version = "0.1" gamemode = "iGaming" name = "iGaming" />
+	<info author = "PewX" version = "0.1" gamemode = "iGaming" name = "iGaming" type = "Gamemode" />
 	<oop>true</oop>
 
 	<!--Shared-->
-	    <script src = "shared/classlib.lua" type = "shared" cache = "false" />
-	    <script src = "shared/utilities.lua" type = "shared" cache = "false" />
+		<!--Utility-->
+	    	<script src = "shared/utility/classlib.lua" type = "shared" cache = "false" />
+	    	<script src = "shared/utility/utilities.lua" type = "shared" cache = "false" />
+		<!--Classes-->
+			<script src = "shared/classes/CRPC.lua" type = "shared" cache = "false" />
+			<script src = "shared/classes/CEvent.lua" type = "shared" cache = "false" />
+			<script src = "shared/classes/CSingleton.lua" type = "shared" cache = "false" />
 
 	<!--Server-->
 		<!--System & Core-->
 			<script src = "server/system/CCore.lua" type = "server" />
 			<script src = "server/system/CDatabase.lua" type = "server" />
 		<!--Classes-->
+			<script src = "server/classes/iConnect/serialize.lua" type = "server" />
 			<script src = "server/classes/iConnect/iConnect.lua" type = "server" />
 			<script src = "server/classes/CPlayer/CPlayer.lua" type = "server" />
             <script src = "server/classes/Maps/CMap.lua" type = "server" />
 
+			<script src = "server/classes/CRacePickup/CRacePickup.lua" type = "server" />
+
             <script src = "server/classes/Gamemodes/CGamemode.lua" type = "server " />
             <script src = "server/classes/Gamemodes/CLobby.lua" type = "server" />
             <script src = "server/classes/Gamemodes/COpenWorld.lua" type = "server" />
+            <script src = "server/classes/Gamemodes/CRaceDD/CRaceDD.lua" type = "server" />
 		<!--Managers-->
+			<script src = "server/managers/CDownloadManager/CDownloadManager.lua" type = "server" />
 			<script src = "server/managers/CPlayerManager/CPlayerManager.lua" type = "server" />
 			<script src = "server/managers/CLoginManager/CLoginManager.lua"  type = "server" />
             <script src = "server/managers/CMapManager/CMapManager.lua" type = "server" />
 			<script src = "server/managers/CGamemodeManager/CGamemodeManager.lua" type = "server" />
+			<script src = "server/managers/CPickupManager/CPickupManager.lua" type = "server" />
 
 	<!--Client-->
 		<!--System & Core-->
@@ -37,11 +48,19 @@
 
             <!--CLogin-->
 				<script src = "client/classes/CLogin/CLogin.lua" type = "client" cache = "false" />
+
+			<!--CRacePickup-->
+				<script src = "client/classes/CRacePickup/CRacePickup.lua" type = "client" caceh = "false" />
+
             <!--Gamemodes-->
                 <script src = "client/classes/Gamemodes/CLobby.lua" type = "client" cache = "false" />
                 <script src = "client/classes/Gamemodes/COpenWorld.lua" type = "client" cache = "false" />
-            <!--CShader-->
+				<script src = "client/classes/Gamemodes/CRaceDD/CRaceDD.lua" type = "client" cache = "false" />
+                <!--<script src = "client/classes/Gamemodes/COpenWorld.lua" type = "client" cache = "false" />-->
+
+			<!--CShader-->
                 <script src = "client/classes/CShader/CShader.lua" type = "client" cache = "false" />
+
 			<!--dxGui-->
 				<script src = "client/classes/dxGui/CDXAnimation.lua" type = "client" cache = "false" />
 				<script src = "client/classes/dxGui/CDX__Manager.lua" type = "client" cache = "false" />
@@ -56,11 +75,16 @@
 			<!--sound-->
 				<script src = "client/classes/sound/CSound.lua" type = "client" cache = "false" />
 		<!--Managers-->
+			<script src = "client/managers/CDownloadManager/CDownloadManager.lua" type = "client" cache = "false" />
+			<script src = "client/managers/CMapManager/CMapManager.lua" type = "client" cache = "false" />
+			<script src = "client/managers/CModManager/CModManager.lua" type = "client" cache = "false" />
+			<script src = "client/managers/CScriptManager/CScriptManager.lua" type = "client" cache = "false" />
+
             <script src = "client/managers/CGamemodeManager.lua" type = "client" cache = "false" />
             <script src = "client/managers/CSoundManager.lua" type = "client" cache = "false" />
 
     <!--Files-->
-	<file src = "res/images/iGaming.png" />
+	<!--<file src = "res/images/iGaming.png" />
     <file src = "res/shaders/BlurShader.fx" />
-    <file src = "res/shaders/motion.fx" />
+    <file src = "res/shaders/motion.fx" />-->
 </meta>

@@ -26,8 +26,8 @@ end
 function CGamemode:addPlayer(ePlayer)
     if self:isPlayerInLobby(ePlayer) then return false end
     table.insert(self.players, ePlayer)
-    triggerClientEvent(ePlayer, "server:onJoinGamemode", ePlayer, self.Name)
-    outputChatBox("You joined Gamemode: " .. self.Name)
+    triggerClientEvent(ePlayer, "server:onJoinGamemode", ePlayer, self.Name)    --Todo: Use RPC
+    outputChatBox("You joined Gamemode: " .. self.Name) --Todo: Just a dev output
 end
 
 function CGamemode:removePlayer(ePlayer)

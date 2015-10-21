@@ -10,7 +10,7 @@ function CPlayer:constructor()
     self.loggedIn = false
     self.userID = nil
     self.playerName = self:getName()
-    self.clearName = utils.clearText(self:getName()) --Todo: Utils Without colorcodes
+    self.clearName = clearText(self:getName())
     self.CurrentGamemode = false
     bindKey(self, "F1", "down", bind(CPlayer.returnToLobby, self))
     outputChatBox("Welcome " .. self.clearName)
@@ -37,9 +37,13 @@ function CPlayer:onLogin()
 end
 
 function CPlayer:joinGamemode(sGamemode)
-    if self.CurrentGamemode then self.CurrentGamemode:playerLeave(self) end
-    self.CurrentGamemode = sGamemode
-    sGamemode:playerJoin(self)
+    if sGamemode.playerJoin then
+        if self.CurrentGamemode then self.CurrentGamemode:playerLeave(self) end
+        self.CurrentGamemode = sGamemode
+        sGamemode:playerJoin(self)
+    else
+        debugOutput("[CPlayer] Can't join gamemode, no playerJoin methode available")
+    end
 end
 
 function CPlayer:returnToLobby()
@@ -53,14 +57,3 @@ end
 function CPlayer:message(sText)
     self:outputChat(sText, 255, 255, 255, true)
 end
---[[addCommandHandler("load",
-    function(_, _, moduleString)
-        Core:loadModule(moduleString)
-    end
-)
-
-addCommandHandler("unload",
-    function(_, _, moduleString)
-        Core:unloadModule(moduleString)
-    end
-)]]

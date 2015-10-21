@@ -12,7 +12,7 @@ function CGamemodeManager:constructor()
     table.insert(self.gamemodes, {"CLobby", {}})
     table.insert(self.gamemodes, {"COpenWorld", {name = "Open World", desc = "LoremIpsum", maxPlayers = 100}})
     --table.insert(self.gamemodes, {"CRaceDM", {name = "DM", desc = "LoremIpsum", maxPlayers = 50}})
-    --table.insert(self.gamemodes, {"CRaceDD", {name = "DD", desc = "LoremIpsum", maxPlayers = 100}})
+    table.insert(self.gamemodes, {"CRaceDD", {name = "DD", desc = "LoremIpsum", maxPlayers = 100}})
     --table.insert(self.gamemodes, {"CiSurvival", {name = "iSurvival", desc = "LoremIpsum", maxPlayers = 100}})
     self:createGamemodes()
 end

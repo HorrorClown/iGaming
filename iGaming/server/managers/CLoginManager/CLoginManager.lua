@@ -16,6 +16,10 @@ function CLoginManager:destructor()
 end
 
 function CLoginManager:onLogin(sUsername, sPW, bEMAIL)
+    client.loggedIn = true
+    client:onLogin()
+    if true then return end
+
     local userID = WBB:getUserID(sUsername, bEMAIL)
     if userID then
         debugOutput("User is available!")

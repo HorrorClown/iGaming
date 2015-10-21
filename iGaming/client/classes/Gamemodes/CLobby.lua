@@ -10,6 +10,7 @@ function CLobby:constructor()
     debugOutput("[CLobby] Creating Lobby")
     addCommandHandler("gm", bind(CLobby.joinGamemode, self))
 
+
     self.cams = {
         {2054.9406738281, 1298.5733642578, 95.947769165039, 2120.7822265625, 1230.1296386719, 64.637092590332},
         {1814.2286376953, -1888.7556152344, 53.846141815186, 1734.5378417969, -1832.7844238281, 31.117233276367},

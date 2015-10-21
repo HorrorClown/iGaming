@@ -29,7 +29,8 @@ function CMap:constructor(eResource, sType)
         ["ResourceName"] = self.ResourceName
     }
 
-    local mapData = DB:query("SELECT * FROM system_maps WHERE ResourceName = ?", self.ResourceName)
+    --local mapData = DB:query("SELECT * FROM system_maps WHERE ResourceName = ?", self.ResourceName)
+
     if mapData then
         self.ID = mapData[1].ID
         self.CountStarted = mapData[1].CountStarted
@@ -37,16 +38,17 @@ function CMap:constructor(eResource, sType)
         self.TopTimes = fromJSON(mapData[1].TopTimes)
         self.Rating = fromJSON(mapData[1].Rating)
     else
+        self.ID = #Maps
         self.CountStarted = 0
         self.CountFinished = 0
         self.TopTimes = {}
         self.Rating = {}
-        DB:insert("system_maps", "ID, ResourceName, TopTimes, Rating", "NULL, ?, ?, ?", self.ResourceName, toJSON(self.TopTimes), toJSON(self.Rating))
+        --DB:insert("system_maps", "ID, ResourceName, TopTimes, Rating", "NULL, ?, ?, ?", self.ResourceName, toJSON(self.TopTimes), toJSON(self.Rating))
     end
 
     Maps[self.Name] = self
     self.Extracted = false
-    self:extractMapData()
+    --self:extractMapData()   --ToDo: Just for dev reasons, needs many time to extract >1000 maps D:
 end
 
 function CMap:destructor()
@@ -66,10 +68,11 @@ function CMap:extractMapData()
     local mapFile = XML.load((":%s/%s"):format(self.ResourceName, mapPath.src))
     if not mapFile then debugOutput(("[CMap] Error while loading %s/%s.map"):format(self.ResourceName, mapPath.src)) return end
     
-    local mapNodes = mapFile:getAttributes()
+    local mapNodes = mapFile:getChildren()
     for k, v in ipairs(mapNodes) do
         local type = v:getName()
         local attributes = v:getAttributes()
+
         if type == "object" then
             local col = attributes["collisions"] or true
             local a = attributes["alpha"] or 255
@@ -77,13 +80,13 @@ function CMap:extractMapData()
             local scale = attributes["scale"] or 1
             table.insert(self.ContentTable["Object"], {attributes["model"], attributes["posX"], attributes["posY"], attributes["posZ"], attributes["rotX"], attributes["rotY"], attributes["rotZ"], int, col, a, scale})
         elseif type == "marker" then
-            table.insert(self.ContentTable["Marker"], {attributes["posX"], attributes["posY"], attributes["posZ"], attributes["type"], attributes["size"], attributes["color"], attributes["interior"]})
+            table.insert(self.ContentTable["Marker"], {attributes["posX"], attributes["posY"], attributes["posZ"], attributes["type"], attributes["size"], attributes["color"], attributes["interior"], attributes["id"]})
          elseif type == "vehicle" then
             table.insert(self.ContentTable["Vehicle"], {attributes["model"], attributes["posX"], attributes["posY"], attributes["posZ"], attributes["rotX"], attributes["rotY"], attributes["rotZ"]})
         elseif type == "racepickup" then
             table.insert(self.ContentTable["Racepickup"], {attributes["type"], attributes["vehicle"], attributes["posX"], attributes["posY"], attributes["posZ"], attributes["rotX"], attributes["rotY"], attributes["rotZ"]})
         elseif type == "spawnpoint" then
-            table.insert(self.ContentTable["Spawnpoint"], {attributes["vehicle"], attributes["posX"], attributes["posY"], attributes["posZ"], attributes["rotX"], attributes["rotY"], attributes["rotZ"]}})
+            table.insert(self.ContentTable["Spawnpoint"], {attributes["vehicle"], attributes["posX"], attributes["posY"], attributes["posZ"], attributes["rotX"], attributes["rotY"], attributes["rotZ"]})
         elseif type == "ped" then
             table.insert(self.ContentTable["Ped"], {attributes["model"], attributes["posX"], attributes["posY"], attributes["posZ"], attributes["rotX"], attributes["rotY"], attributes["rotZ"]})
         else
@@ -92,7 +95,7 @@ function CMap:extractMapData()
     end
        
     --//Load awesome Map scripts
-    local nodes = meta:getChildreen()
+    local nodes = meta:getChildren()
     for k, v in ipairs(nodes) do
         if v:getName() == "script" then
             local scriptInfo = v:getAttributes()
@@ -114,8 +117,8 @@ function CMap:extractMapData()
             if fileInfo.src then
                 local fileFile = File((":%s/%s"):format(self.ResourceName, fileInfo.src), true)
                 if fileFile then
-                    table.insert(ContentTable["ClientFiles"], {src = fileInfo.src, content = fileFile:read(fileFile:getSize())})
-                    table.insert(ContentTable["ClientFileHashes"], {src = fileInfo.src, hash = fileFile:getSize()})
+                    table.insert(self.ContentTable["ClientFiles"], {src = fileInfo.src, content = fileFile:read(fileFile:getSize())})
+                    table.insert(self.ContentTable["ClientFileHashes"], {src = fileInfo.src, hash = md5(fileFile:read(fileFile:getSize()))})
                     fileFile:close()
                 end
             end
@@ -126,6 +129,30 @@ function CMap:extractMapData()
     self.ContentTable["Settings"].Weather = tonumber(get(("#%s.weather"):format(self.ResourceName))) or 0
     self.ContentTable["Settings"].Time = get(("#%s.time"):format(self.ResourceName)) or "12:00"
     self.ContentTable["Settings"].Gravity = tonumber(get(("#%s.gravity"):format(self.ResourceName))) or 0.008000
-	self.ContentTable["Settings"].Waveheight = tonumber(get(("#%s.waveheight"):format(self.ResourceName)))
+	self.ContentTable["Settings"].Waveheight = tonumber(get(("#%s.waveheight"):format(self.ResourceName))) or 0
 
+    debugOutput("[CMap] Successfully extracted: " .. self.Name)
+end
+
+function CMap:prepareClientDatas()
+    if self.PreparedClientDatas then return end
+    self.PreparedClientDatas = true
+
+    self.clientDatas = {
+        map = {
+            ["Object"] = self.ContentTable["Object"],
+            ["Vehicle"] = self.ContentTable["Vehicle"],
+            ["Ped"] = self.ContentTable["Ped"],
+            ["Marker"] = self.ContentTable["Marker"],
+            ["Racepickup"] = self.ContentTable["Racepickup"],
+            ["Settings"] = self.ContentTable["Settings"],
+        },
+
+        script = self.ContentTable["ClientScript"],
+        fileHashes = self.ContentTable["ClientFileHashes"],
+    }
+end
+
+function CMap:getSpawnpoints()
+    return self.ContentTable["Spawnpoint"]
 end

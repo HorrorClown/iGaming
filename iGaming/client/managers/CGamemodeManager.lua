@@ -19,6 +19,7 @@ end
 
 function CGamemodeManager:joinGamemode(sGamemode)
     self:clearGamemode()
+
     if sGamemode == "Lobby" then
         return self:setGamemode(new(CLobby))
     end
@@ -27,7 +28,7 @@ function CGamemodeManager:joinGamemode(sGamemode)
         return self:setGamemode(new(COpenWorld))
     end
 
-    if sGamemode == "DD" then
+    if sGamemode == "RaceDD" then
         return self:setGamemode(new(CRaceDD))
     end
 end

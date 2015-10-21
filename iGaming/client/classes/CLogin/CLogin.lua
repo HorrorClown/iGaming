@@ -8,19 +8,21 @@ CLogin = {}
 
 function CLogin:constructor()
     fadeCamera(false)
-    --[[self.cams = {
+    self.cams = {
         {2054.9406738281, 1298.5733642578, 95.947769165039, 2120.7822265625, 1230.1296386719, 64.637092590332},
         {1814.2286376953, -1888.7556152344, 53.846141815186, 1734.5378417969, -1832.7844238281, 31.117233276367},
         {1578.1954345703, -1610.4873046875, 78.673355102539, 1501.4410400391, -1658.9365234375, 36.703880310059}
     }
 
     setTime(12, 0)
+    setHeatHaze(0)
+    setWeather(0)
     setMinuteDuration(600000)
     setPlayerHudComponentVisible("all", false)
     fadeCamera(true)
     setCloudsEnabled(false)
 
-    setCameraMatrix(unpack(self.cams[math.random(1, #self.cams)]))]]
+    setCameraMatrix(unpack(self.cams[math.random(1, #self.cams)]))
 
     local sound = new(CSound, "http://pewx.de/res/sounds/iGaming/Nero - The Thrill.mp3", false, 0)
     sound:play()

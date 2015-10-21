@@ -19,6 +19,7 @@ end
 
 function CLobby:playerJoin(ePlayer)
     self:addPlayer(ePlayer)
+    ePlayer:spawn(0, 0, 0, 0, 0, 0, 1337)
 end
 
 function CLobby:playerLeave(ePlayer)
